@@ -1,8 +1,8 @@
-function [fullres, fullresloc] = load_grid(filename, batchinfo, batchdims) 
-
+function [fullres, fullresloc] = load_grid(filepath, filename, batchinfo, batchdims) 
+tempfp=fullfile([filepath, filename]);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%Identify the number of tests within the file, and create a cell array to hold their names.
-[~,bundleinfoTOTHeader]=xlsread(filename,'Required Inputs','C1:J1'); %bundle info headers: 1:X Data Dimension, 2:Depth, 2:Y Data Dimension
-bundleinfoTOT=xlsread(filename,'Required Inputs','C3:J3'); %bundle info: 1:X Data Dimension, 2:Depth, 2:Y Data Dimension
+[~,bundleinfoTOTHeader]=xlsread(tempfp,'Required Inputs','C1:J1'); %bundle info headers: 1:X Data Dimension, 2:Depth, 2:Y Data Dimension
+bundleinfoTOT=xlsread(tempfp,'Required Inputs','C3:J3'); %bundle info: 1:X Data Dimension, 2:Depth, 2:Y Data Dimension
 bundleinfo=bundleinfoTOT(6:8);%just pick the size of the bundle
 if strcmp(bundleinfoTOTHeader(7),'Y Data Dimension')
     LvDC=2;
@@ -45,13 +45,13 @@ for bigx=1:batchinfo(1)
         sheetpull=['Test' ' ' sheettemp ' Tagged'];%pull out the right sheet
         %check if the sheet exists, otherwise, remove the word "Tagged"
         try
-            xlsread(filename,sheetpull,'A1:A1');
+            xlsread(tempfp,sheetpull,'A1:A1');
         catch
             sheetpull=['Test' ' ' sheettemp];%Change name
-            xlsread(filename,sheetpull,'A1:A1');
+            xlsread(tempfp,sheetpull,'A1:A1');
         end
         celllim=num2str(bundleinfo(1)*bundleinfoy+2);
-        sheetinmat=xlsread(filename,sheetpull,strcat('A3:H',celllim));
+        sheetinmat=xlsread(tempfp,sheetpull,strcat('A3:H',celllim));
         for k=1:bundleinfo(1)
             for l=1:bundleinfoy
                 %define variables to get the directions right
