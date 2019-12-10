@@ -6,11 +6,11 @@ close all
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%Give the basic parameters for the importer
 
 %Set the file to be imported
-filename='3expressCPti_3x3_+-92um_46x46_2um_3mNLC.xls'; %filename
-filepath='Z:\CM\18_OctEXPRESS\190525_ExpressCPTiEBSD\'; %file location (with final \). results will be saved here under xpress_results
+filename='fusi_3x3_-+91p5umspacing_61x61_1p5umspacing_3mNLCPostcalib.xls'; %filename
+filepath='Z:\CM\18_OctEXPRESS\191203_ExpressFUSI\'; %file location (with final \). results will be saved here under xpress_results
 
 batchinfo=[3,3];%INSERT BATCH DIMENSION SIZE:
-batchdims=[+92 -92];%SPECIFY SIZE OF EACH BATCH: how many microns are the individuals bundles in the batch separated by? SIGN IS IMPORTANT
+batchdims=[-91.5 91.5];%SPECIFY SIZE OF EACH BATCH: how many microns are the individuals bundles in the batch separated by? SIGN IS IMPORTANT
 
 [fullres, fullresloc]=load_gridV2(filepath, filename,batchinfo,batchdims); %Loading all the data from the sheet.
 

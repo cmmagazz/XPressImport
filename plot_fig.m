@@ -6,12 +6,9 @@
 resultsdir=fullfile(filepath,[filename(1:length(filename)-4) '_Express_results']);
 if isdir(resultsdir) == 0; mkdir(resultsdir); end
 
+% Set things as individual arrays:
 H=fullres(:,:,6);%HARDNESS
-H(H>1000)=0;
-meanH=nanmean(H(:));
-stdH=nanstd(H(:));
-is2rem= H>8*nanmedian(H(:)); %remove things outside 3*median (0's fixed later)
-H(is2rem)=NaN;
+M=fullres(:,:,4);
 X=fullresloc(:,:,1); %X and Y positions
 Y=fullresloc(:,:,2);
 isdel= X==0 & Y==0;%set places where the location is both 0 to NaN (no data)
@@ -20,9 +17,21 @@ Y(isdel)=NaN;
 H(isdel)=NaN;
 X=X-min(X(:));
 Y=Y-min(Y(:));
+M(isdel)=NaN;
+D=fullres(:,:,2);
+D(isdel)=NaN;
+L=fullres(:,:,3);
+L(isdel)=NaN;
+S=fullres(:,:,1);
+S(isdel)=NaN;
+
+
+H(H>1000)=0;
+meanH=nanmean(H(:));
+stdH=nanstd(H(:));
 figure;
 hplot=contourf(X,Y,H,455,'LineColor','None');
-%caxis([3 9.5]);
+caxis([meanH-2*stdH meanH+2*stdH])
 title('Hardness')
 xlabel('\mum')
 ylabel('\mum')
@@ -38,23 +47,14 @@ saveas(gcf,fullfile(resultsdir, figname),'png')
 
 %%
 %MODULUS PLOT SCRIPT
-M=fullres(:,:,4);
-is2rem= M>3*nanmedian(M(:)); %remove things outside 3*median (0's fixed later)
-M(is2rem)=NaN;
-X=fullresloc(:,:,1); %X and Y positions
-Y=fullresloc(:,:,2);
-isdel= X==0 & Y==0;%set places where the location is both 0 to NaN (no data)
-X(isdel)=NaN;
-Y(isdel)=NaN;
-M(isdel)=NaN;
-X=X-min(X(:));
-Y=Y-min(Y(:));
+
 figure;
 hplot=contourf(X,Y,M,455,'LineColor','None');
 title('Modulus')
 xlabel('\mum')
 ylabel('\mum')
 axis image
+caxis([meanM-2*stdM meanM+2*stdM])
 c=colorbar;
 c.Label.String = 'Modulus (GPa)';
 figname=['Modulus Figure ' filename(1:(max(size(filename)-4)))];
@@ -62,15 +62,7 @@ saveas(gcf,fullfile(resultsdir, figname),'png')
 
 
 %DEPTH PLOT SCRIPT
-D=fullres(:,:,2);
-is2rem= D>10*nanmedian(D(:)); %remove things outside 3*median (0's fixed later)
-D(is2rem)=NaN;
-X=fullresloc(:,:,1); %X and Y positions
-Y=fullresloc(:,:,2);
-isdel= X==0 & Y==0;%set places where the location is both 0 to NaN (no data)
-X(isdel)=NaN;
-Y(isdel)=NaN;
-D(isdel)=NaN;
+
 X=X-min(X(:));
 Y=Y-min(Y(:));
 figure;
@@ -85,17 +77,7 @@ figname=['Depth Figure ' filename(1:(max(size(filename)-4)))];
 saveas(gcf,fullfile(resultsdir, figname),'png')
 
 %LOAD PLOT
-L=fullres(:,:,3);
-is2rem= L>3*nanmedian(L(:)); %remove things outside 3*median (0's fixed later)
-L(is2rem)=NaN;
-X=fullresloc(:,:,1); %X and Y positions
-Y=fullresloc(:,:,2);
-isdel= X==0 & Y==0;%set places where the location is both 0 to NaN (no data)
-X(isdel)=NaN;
-Y(isdel)=NaN;
-L(isdel)=NaN;
-X=X-min(X(:));
-Y=Y-min(Y(:));
+
 figure;
 hplot=contourf(X,Y,L,455,'LineColor','None');
 title('Indentation Load')
@@ -109,17 +91,7 @@ saveas(gcf,fullfile(resultsdir, figname),'png')
 
 
 %Tip Position/SURFACE DISPLACEMENT PLOT
-S=fullres(:,:,1);
-is2rem= S>3*nanmedian(S(:)); %remove things outside 3*median (0's fixed later)
-S(is2rem)=NaN;
-X=fullresloc(:,:,1); %X and Y positions
-Y=fullresloc(:,:,2);
-isdel= X==0 & Y==0;%set places where the location is both 0 to NaN (no data)
-X(isdel)=NaN;
-Y(isdel)=NaN;
-S(isdel)=NaN;
-X=X-min(X(:));
-Y=Y-min(Y(:));
+
 figure;
 hplot=contourf(X,Y,S,455,'LineColor','None');
 title('Surface Displacement Plot')
