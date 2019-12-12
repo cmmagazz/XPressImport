@@ -29,9 +29,13 @@ S(isdel)=NaN;
 H(H>1000)=0;
 meanH=nanmean(H(:));
 stdH=nanstd(H(:));
+
+meanM=nanmean(M(:));
+stdM=nanstd(M(:));
+
 figure;
 hplot=contourf(X,Y,H,455,'LineColor','None');
-caxis([meanH-2*stdH meanH+2*stdH])
+caxis([meanH-4*stdH meanH+4*stdH])
 title('Hardness')
 xlabel('\mum')
 ylabel('\mum')
