@@ -25,8 +25,27 @@ L(isdel)=NaN;
 S=fullres(:,:,1);
 S(isdel)=NaN;
 
+ceilingH=1e3;
+whereHigh=H>ceilingH;
+H(whereHigh)=NaN;%sanity values
+whereLow=H<0;
+H(whereLow)=NaN;
+H(whereHigh)=nanmean(H(:))+nanstd(H(:));
+H(whereLow)=nanmean(H(:))-nanstd(H(:));
 
-H(H>1000)=0;
+
+ceilingM=1e6;
+whereHighM=M>ceilingM;
+M(whereHighM)=NaN;%sanity values
+whereLowM=M<0;
+M(whereLowM)=NaN;
+M(whereHighM)=nanmean(M(:))+nanstd(M(:));
+M(whereLowM)=nanmean(M(:))-nanstd(M(:));
+
+D(D>1e300)=NaN;
+L(L>1e300)=NaN;
+S(S>1e300)=NaN;
+
 meanH=nanmean(H(:));
 stdH=nanstd(H(:));
 
@@ -35,7 +54,8 @@ stdM=nanstd(M(:));
 
 figure;
 hplot=contourf(X,Y,H,455,'LineColor','None');
-caxis([meanH-4*stdH meanH+4*stdH])
+%caxis([2 15])
+caxis([meanH-2*stdH meanH+2*stdH])
 title('Hardness')
 xlabel('\mum')
 ylabel('\mum')
@@ -115,7 +135,7 @@ title('Hardness divided by Modulus')
 xlabel('\mum')
 ylabel('\mum')
 axis image
-caxis([0 0.05]);
+caxis([nanmean(HnM(:))-2*nanstd(HnM(:)) nanmean(HnM(:))+2*nanstd(HnM(:))])
 c=colorbar;
 c.Label.String = 'Hardness/Modulus';
 figname=['HardnessOVMod ' filename(1:(max(size(filename)-4)))];
@@ -149,8 +169,46 @@ saveas(gcf,fullfile(resultsdir, figname),'png')
 close all 
 disp 'Express Import Complete'
 
+%% other small things that should be commented out
+
+meanHcolumn=nanmean(M);
+yposcolumn=nanmean(Y);
+meanHcolumnsm=smoothdata(meanHcolumn,2,'gaussian',10);
+figure;
+plot(yposcolumn,meanHcolumnsm);
+%ylim([7 11.5])
+xlim([0 3000])
+ylabel('Hardness /GPa')
+xlabel('Radial Position /\mum')
+title('Line profile of hardness along the radius - smoothed by 10 points')
+figname=['Hardness Line Profile' filename(1:(max(size(filename)-4)))];
+saveas(gcf,fullfile(resultsdir, figname),'png')
+saveas(gcf,fullfile(resultsdir, figname),'fig')
 
 
+
+
+H2=H(:,799:end);
+H1=H(:,1:799);
+
+
+
+meanH1column=nanmean(H1);
+meanH2column=nanmean(H2);
+yposcolumn=nanmean(Y);
+yposcolumn1=yposcolumn(:,1:799);
+yposcolumn2=yposcolumn(:,1:715);
+meanH1columnsm=smoothdata(meanH1column,2,'gaussian',10);
+meanH2columnsm=smoothdata(meanH2column,2,'gaussian',10);
+figure;
+plot(yposcolumn1,meanH1columnsm);
+hold on
+plot(yposcolumn2,meanH2columnsm);
+%ylim([7 11.5])
+xlim([0 3000])
+ylabel('Hardness /GPa')
+xlabel('Radial Position /\mum')
+title('Line profile of hardness along the radius - smoothed by 10 points')
 %%
 %SOME PLOTTING STUFF PRIMARILY DEBUGGING
 %{
