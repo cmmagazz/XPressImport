@@ -25,6 +25,7 @@ Thumbs.db
 #Matlab Files
 *.asv
 *.mat
+XPInputDeck.m
 
 #data files
 *.h5
