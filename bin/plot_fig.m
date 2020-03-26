@@ -61,6 +61,7 @@ end
 D(D>1e300)=NaN;
 L(L>1e300)=NaN;
 S(S>1e300)=NaN;
+S2oL(S2oL>1e300)=NaN;
 
 % Handy values
 meanH=nanmean(H(:));
