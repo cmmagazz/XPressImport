@@ -31,7 +31,11 @@ H(whereHigh)=NaN;%sanity values
 whereLow=H<0;
 H(whereLow)=NaN;
 H(whereHigh)=nanmean(H(:))+nanstd(H(:));
-H(whereLow)=nanmean(H(:))-nanstd(H(:));
+if nanmean(H(:))>nanstd(H(:))
+    H(whereLow)=nanmean(H(:))-nanstd(H(:));
+else
+    H(whereLow)=0;
+end
 
 
 ceilingM=1e6;
@@ -52,10 +56,17 @@ stdH=nanstd(H(:));
 meanM=nanmean(M(:));
 stdM=nanstd(M(:));
 
+
 figure;
 hplot=contourf(X,Y,H,455,'LineColor','None');
 %caxis([2 15])
-caxis([meanH-2*stdH meanH+2*stdH])
+%
+if meanH>stdH
+    caxis([meanH-0.5*stdH meanH+0.5*stdH])
+else 
+    caxis([min(hplot(:)) meanH+1*stdH])
+end
+%}
 title('Hardness')
 xlabel('\mum')
 ylabel('\mum')
@@ -171,6 +182,21 @@ disp 'Express Import Complete'
 
 %% other small things that should be commented out
 
+
+
+logH=log(H);
+figure;
+hplot=contourf(X,Y,logH,455,'LineColor','None');
+title('Log of Hardness')
+xlabel('\mum')
+ylabel('\mum')
+axis image
+c=colorbar;
+c.Label.String = 'Log Hardness';
+figname=['LogHardness Figure ' filename(1:(max(size(filename)-4)))];
+saveas(gcf,fullfile(resultsdir, figname),'png')
+
+%{
 meanHcolumn=nanmean(M);
 yposcolumn=nanmean(Y);
 meanHcolumnsm=smoothdata(meanHcolumn,2,'gaussian',10);
@@ -209,6 +235,7 @@ xlim([0 3000])
 ylabel('Hardness /GPa')
 xlabel('Radial Position /\mum')
 title('Line profile of hardness along the radius - smoothed by 10 points')
+%}
 %%
 %SOME PLOTTING STUFF PRIMARILY DEBUGGING
 %{
