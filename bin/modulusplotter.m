@@ -1,6 +1,4 @@
-
-meanM=nanmean(M(:));
-stdM=nanstd(M(:));
+%% I've left some equivalents for Modulus here
 
 figure;
 hist=histogram(M(:));
@@ -13,7 +11,6 @@ text(0.05*max(M(:)),max(hist.Values(:))*0.9,txt)
 figname=['Modulus Histogram ' filename(1:(max(size(filename)-4)))];
 saveas(gcf,fullfile(resultsdir, figname),'png')
 
-
 figure;
 scatter(M(:),H(:));
 title('Modulus vs Hardness')
@@ -21,7 +18,6 @@ xlabel('Modulus /GPa')
 ylabel('Hardness /GPa')
 figname=['Modulus Vs Hardness ' filename(1:(max(size(filename)-4)))];
 saveas(gcf,fullfile(resultsdir, figname),'png')
-
 
 figure;
 scatter(M(:).^2,H(:));
