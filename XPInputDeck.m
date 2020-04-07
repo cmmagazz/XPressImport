@@ -5,11 +5,11 @@
 % CM Magazzeni 2020
 
 % The file to be imported
-filename='express_singlebundle_95x95_0p9umspacing_0p03mNLC.xls'; %filename
-filepath='Z:\CM\18_OctEXPRESS\200311_PR382\'; %file location (with final \)
+filename='express_1x47_+85umspacing_17x17_5umspacing_80umextent_20mNLC.xls'; %filename
+filepath='Z:\CM\18_OctEXPRESS\200306_WP1-006\'; %file location (with final \)
 % results will be saved here under express_results
 
-batchinfo=[1, 1];%Batch size (see help below)
+batchinfo=[1, 47];%Batch size (see help below)
 batchdims=[85, 85];%Batch dimensions: how many microns are the 
 %individuals bundles in the batch separated by? SIGN IS IMPORTANT
 cleanplotq = 1; %clean up NaN values?
