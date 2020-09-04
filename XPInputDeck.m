@@ -1,18 +1,27 @@
 %% This is the input deck, and the only file which should need editing
 % Here you will input the filepath, filename, and various details of the
 % express data
-%% Then, you simply need to right click > run on the file xpressimport 
+
+clear all
+close all
+addpath src
+
+%% Input variables 
 % CM Magazzeni 2020
 
 % The file to be imported
-filename='express_1x47_+85umspacing_17x17_5umspacing_80umextent_20mNLC.xls'; %filename
-filepath='Z:\CM\18_OctEXPRESS\200306_WP1-006\'; %file location (with final \)
+filename='quickmap_singlebundle_40x40_2umspacing_3mNLC.xls'; %filename
+filepath='Z:\CM\18_OctEXPRESS\200727_CpTiGB\'; %file location (with final \)
 % results will be saved here under express_results
 
-batchinfo=[1, 47];%Batch size (see help below)
-batchdims=[85, 85];%Batch dimensions: how many microns are the 
+batchinfo=[1, 1];%Batch size (see help below)
+batchdims=[+82, -82];%Batch dimensions: how many microns are the 
 %individuals bundles in the batch separated by? SIGN IS IMPORTANT
+
+%DISCLAIMER: this is a hack, and is not supposed to be used prior to any
+%statistical analysis. This is purely for visualisation purposes. 
 cleanplotq = 1; %clean up NaN values?
+resolution = ['-r' num2str(600)];
 
 %Express maps contain batches of bundles:
 %    a bundle
@@ -30,3 +39,5 @@ cleanplotq = 1; %clean up NaN values?
 %  \_____________________________/
 %        the batch of bundles
 % In this case, a 2 x 2 batch of 5x5 indent bundles
+%% Then just click run
+xpressimport;

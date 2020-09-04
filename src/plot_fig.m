@@ -34,6 +34,8 @@ whereHighH=H>ceilingH;
 H(whereHighH)=NaN;
 whereLowH=H<0;
 H(whereLowH)=NaN;
+%DISCLAIMER: this is a hack, and is not supposed to be used prior to any
+%statistical analysis. This is purely for visualisation purposes. 
 if cleanplotq==1
     H(whereHighH)=nanmean(H(:))+nanstd(H(:));
     if nanmean(H(:))>nanstd(H(:))
@@ -74,18 +76,18 @@ stdM=nanstd(M(:));
 figure;
 hplot=contourf(X,Y,H,455,'LineColor','None');
 if meanH>stdH
-    caxis([meanH-0.5*stdH meanH+0.5*stdH])
+    caxis([meanH-1.5*stdH meanH+1.5*stdH])
 else 
     caxis([min(hplot(:)) meanH+1*stdH])
 end
-title('Hardness')
+title('Nanoindentation Map')
 xlabel('\mum')
 ylabel('\mum')
 axis image
 c=colorbar;
 c.Label.String = 'Hardness (GPa)';
 figname=['Hardness Figure ' filename(1:(max(size(filename)-4)))];
-saveas(gcf,fullfile(resultsdir, figname),'png')
+print(fullfile(resultsdir, figname),'-dpng',resolution)
 
 %smoothing currently not implemented, but here if need be.
 %H2=smoothdata(H,2,'gaussian',7);
@@ -100,14 +102,14 @@ xlabel('\mum')
 ylabel('\mum')
 axis image
 if meanM>stdM
-    caxis([meanM-0.5*stdM meanM+0.5*stdM])
+    caxis([meanM-1.5*stdM meanM+1.5*stdM])
 else 
     caxis([min(hplot(:)) meanM+1*stdM])
 end
 c=colorbar;
 c.Label.String = 'Modulus (GPa)';
 figname=['Modulus Figure ' filename(1:(max(size(filename)-4)))];
-saveas(gcf,fullfile(resultsdir, figname),'png')
+print(fullfile(resultsdir, figname),'-dpng',resolution)
 
 %DEPTH PLOT SCRIPT
 figure;
@@ -119,7 +121,7 @@ axis image
 c=colorbar;
 c.Label.String = 'Depth (nm)';
 figname=['Depth Figure ' filename(1:(max(size(filename)-4)))];
-saveas(gcf,fullfile(resultsdir, figname),'png')
+print(fullfile(resultsdir, figname),'-dpng',resolution)
 
 %LOAD PLOT
 figure;
@@ -131,7 +133,7 @@ axis image
 c=colorbar;
 c.Label.String = 'Load (mN)';
 figname=['Load Figure ' filename(1:(max(size(filename)-4)))];
-saveas(gcf,fullfile(resultsdir, figname),'png')
+print(fullfile(resultsdir, figname),'-dpng',resolution)
 
 %Tip Position/SURFACE DISPLACEMENT PLOT
 figure;
@@ -143,7 +145,7 @@ axis image
 c=colorbar;
 c.Label.String = 'Tip Position (nm)';
 figname=['SurfaceDisp Figure ' filename(1:(max(size(filename)-4)))];
-saveas(gcf,fullfile(resultsdir, figname),'png')
+print(fullfile(resultsdir, figname),'-dpng',resolution)
 
 %Tip Position/SURFACE DISPLACEMENT PLOT
 figure;
@@ -155,7 +157,7 @@ axis image
 c=colorbar;
 c.Label.String = 'Stiffness ^{2} / Load(N/m)';
 figname=['S2oL Figure ' filename(1:(max(size(filename)-4)))];
-saveas(gcf,fullfile(resultsdir, figname),'png')
+print(fullfile(resultsdir, figname),'-dpng',resolution)
 
 %Hardness over modulus
 HnM=H./M;
@@ -173,7 +175,7 @@ end
 c=colorbar;
 c.Label.String = 'Hardness/Modulus';
 figname=['HardnessOVMod ' filename(1:(max(size(filename)-4)))];
-saveas(gcf,fullfile(resultsdir, figname),'png')
+print(fullfile(resultsdir, figname),'-dpng',resolution)
 
 %% HISTOGRAMS
 %Hardness histogram
@@ -186,7 +188,7 @@ ylabel('Number of Indents')
 txt = {['Average Hardness: ' num2str(meanH, '%.3g') ' GPa'],['Standard Deviation: ' num2str(stdH, '%.3g') ' GPa']};
 text(0.05*max(H(:)),max(hist.Values(:))*0.9,txt)
 figname=['Hardness Histogram ' filename(1:(max(size(filename)-4)))];
-saveas(gcf,fullfile(resultsdir, figname),'png')
+print(fullfile(resultsdir, figname),'-dpng',resolution)
 
 %Close up of the hardness histogram
 figure;
@@ -200,14 +202,42 @@ else
 end
 ylabel('Number of Indents')
 figname=['Zoom Hardness Histogram ' filename(1:(max(size(filename)-4)))];
-saveas(gcf,fullfile(resultsdir, figname),'png')
+print(fullfile(resultsdir, figname),'-dpng',resolution)
+
+
+%Hardness histogram
+figure;
+hist=histogram(M(:));
+title('Histogram of Modulus Measurements')
+xlabel('Modulus /GPa')
+xlim([0 max(M(:))]) 
+ylabel('Number of Indents')
+txt = {['Average Modulus: ' num2str(meanM, '%.3g') ' GPa'],['Standard Deviation: ' num2str(stdM, '%.3g') ' GPa']};
+text(0.05*max(M(:)),max(hist.Values(:))*0.9,txt)
+figname=['Modulus Histogram ' filename(1:(max(size(filename)-4)))];
+print(fullfile(resultsdir, figname),'-dpng',resolution)
 
 
 close all 
 
 %% other small things that should be commented out
-
 %{
+X2=X(70:93,1:46);
+X2=X2-62.11;
+Y2=Y(70:93,1:46);
+H2=M(70:93,1:46);
+logH=log(H2);
+figure;
+hplot=contourf(X2,Y2,H2,455,'LineColor','None');
+title('Nanoindentation Map')
+xlabel('\mum')
+ylabel('\mum')
+caxis([0 2])
+axis image
+c=colorbar;
+c.Label.String = 'Modulus /GPa';
+figname=['Modulus Figure2 ' filename(1:(max(size(filename)-4)))];
+saveas(gcf,fullfile(resultsdir, figname),'png')
 
 logH=log(H);
 figure;

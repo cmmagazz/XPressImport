@@ -58,7 +58,7 @@ fprintf(fid, 'axis image %%make it square\n');
 fprintf(fid, 'c=colorbar; %%add a colourbar\n');
 fprintf(fid, "c.Label.String = 'Hardness (GPa)';\n");
 fprintf(fid, "figname=['Hardness Figure ' filename(1:(max(size(filename)-4)))]; %%variable name\n");
-fprintf(fid, "saveas(gcf, figname,'png') %%and save it\n");
+fprintf(fid, "print(fullfile(resultsdir, figname),'-dpng') %%and save it\n");
 fprintf(fid, '\n');
 
 fprintf(fid, '%%MODULUS PLOT SCRIPT\n');
@@ -76,7 +76,7 @@ end
 fprintf(fid, 'c=colorbar;\n');
 fprintf(fid, "c.Label.String = 'Modulus (GPa)';\n");
 fprintf(fid, "figname=['Modulus Figure ' filename(1:(max(size(filename)-4)))];\n");
-fprintf(fid, "saveas(gcf, figname,'png')\n");
+fprintf(fid, "print(fullfile(resultsdir, figname),'-dpng')\n");
 
 fprintf(fid, '%% You could, for instance, plot Hardness times modulus by doing: \n');
 fprintf(fid, 'HtimesM=H.*M; \n');

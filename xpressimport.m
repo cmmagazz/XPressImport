@@ -2,11 +2,6 @@
 %KLA Tencor G200 nanoindenter.
 % CMM 2020
 
-clear all
-close all
-addpath bin
-
-XPInputDeck;
 [fullres, fullresloc]=load_gridV2(filepath, filename,batchinfo,batchdims); %Loading all the data from the sheet.
 plot_fig; %plotting results
 mcreate;  %create a script for handy plotting in the results folder
