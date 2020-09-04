@@ -41,11 +41,14 @@ Referring to an experiment with a column of 47 bundles (1x47), spaced 85um apart
 TO RUN THE SCRIPT
 The script is run as a two step process: 
 1) Changes are made to the XPInputDeck.m file to include all necessary user inputs
-2) Right click > run the xpressimport.m file, which performs the following: 
-2)a) Clean up the space, and read the variables in XPInputDeck
-2)b) Run LoadGridV2, which reads from the excel file to create the variables
-2)c) Run plot_fig to clean the variables and plot figures. 
-2)d) Run mcreate to create a .m file which can be used to change the figures, containing details on how the figures were plotted.
+2) Run the XPInputDeck file, which cleans up the space, reads the variables, and runs xpressimport.m which does:
+2)a) Runs LoadGridV2, which reads from the excel file to create the variables
+2)b) Runs plot_fig to clean the variables and plot figures. 
+2)c) Runs mcreate to create a .m file which can be used to change the figures, containing details on how the figures were plotted.
 
+The data output is a series of X * Y doubles which contain all the values in a grid. This includes the expected Hardness (H), Modulus (M), Depth (D), as well as the X and Y coordinates. See the plot_fig code for more details on what else is present. The convention in this is slightly different but helpful when analysing:
+1) Origin is at 0 : X(1,1) & Y(1,1) = 0. 
+2) Coordinates are cartesian: X(2,1) > X(1,1), and Y(1,2) > Y(1,1)
+The main plotting function used is contourf, which holds the spatial convention and makes (in my opinion) a nice visualisation of the data. 
 
 This program is given as-is with an MIT license. Please feel free to use and improve this, but give credit to this repository. 
