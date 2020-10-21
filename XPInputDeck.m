@@ -10,18 +10,18 @@ addpath src
 % CM Magazzeni 2020
 
 % The file to be imported
-filename='quickmap_singlebundle_40x40_2umspacing_3mNLC.xls'; %filename
-filepath='Z:\CM\18_OctEXPRESS\200727_CpTiGB\'; %file location (with final \)
+filename='fusi_3x3_-+91p5umspacing_61x61_1p5umspacing_3mNLCBETA.xls'; %filename
+filepath='Z:\CM\18_OctEXPRESS\191203_ExpressFUSI\2019-12-06 Batch #00001BETAcorrection\'; %file location (with final \)
 % results will be saved here under express_results
 
-batchinfo=[1, 1];%Batch size (see help below)
-batchdims=[+82, -82];%Batch dimensions: how many microns are the 
+batchinfo=[3, 3];%Batch size (see help below)
+batchdims=[-91.5, +91.5];%Batch dimensions: how many microns are the 
 %individuals bundles in the batch separated by? SIGN IS IMPORTANT
 
 %DISCLAIMER: this is a hack, and is not supposed to be used prior to any
 %statistical analysis. This is purely for visualisation purposes. 
 cleanplotq = 1; %clean up NaN values?
-resolution = ['-r' num2str(600)];
+resolution = ['-r' num2str(1200)];
 
 %Express maps contain batches of bundles:
 %    a bundle
