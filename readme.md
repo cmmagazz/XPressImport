@@ -34,7 +34,7 @@ For example:
 
 'express_1x47_++85umspacing_17x17_5umspacing_80umextent_20mNLC.xls'
 
-Referring to an experiment with a column of 47 bundles (1x47), spaced 85um apart in the positive x and y direction, each containing 17x17 indents spaced 5 micron apart. This means a bundle extent (size of the bundle) of 80um, justifying a 85 between bundles in order to preserve the 5um spacing between all indents. The experiment was carried out at 80mN in Load Control mode. 
+Referring to an experiment with a column of 47 bundles (1x47), spaced 85um apart in the positive x and y direction, each containing 17x17 indents spaced 5 micron apart. This means a bundle extent (size of the bundle) of 80um, justifying a 85 between bundles in order to preserve the 5um spacing between all indents. The experiment was carried out at 20mN in Load Control mode. 
 
 
 
