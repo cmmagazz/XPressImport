@@ -10,12 +10,12 @@ addpath src
 % CM Magazzeni 2020
 
 % The file to be imported
-filename='quickmap_singlebundle_40x40_2umspacing_3mNLC.xls'; %filename
-filepath='Z:\CM\18_OctEXPRESS\200727_CpTiGB\'; %file location (with final \)
+filename='quickmap_10x10_5umspacing.xls'; %filename
+filepath='C:\Users\Magazzeni\Desktop\TEMPToDelete\'; %file location (with final \)
 % results will be saved here under express_results
 
 batchinfo=[1, 1];%Batch size (see help below)
-batchdims=[+82, -82];%Batch dimensions: how many microns are the 
+batchdims=[+82, +82];%Batch dimensions: how many microns are the 
 %individuals bundles in the batch separated by? SIGN IS IMPORTANT
 
 %DISCLAIMER: this is a hack, and is not supposed to be used prior to any
@@ -39,5 +39,5 @@ resolution = ['-r' num2str(600)];
 %  \_____________________________/
 %        the batch of bundles
 % In this case, a 2 x 2 batch of 5x5 indent bundles
-%% Then just click run
+%% Then just click run on this section
 xpressimport;
